@@ -1,0 +1,17 @@
+@import url("./boilerplate.css");
+
+body {
+    display: flex;
+    justify-content: center;
+    background-color: #d9d9d9;
+}
+
+canvas {
+    width: 318px;
+    height: 548px;
+    background-color: #de0017;
+    border: thin solid #707070;
+    box-sizing: border-box;
+    margin-top: 20px;
+    border-radius: 4px;
+}
