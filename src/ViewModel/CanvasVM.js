@@ -2,15 +2,17 @@ import * as Dex from "./PokedexVM";
 import * as Circle from "./CirclesVM";
 const dpr = window.devicePixelRatio || 1;
 
-export const getPokemon = async (setData) => {
+export const getPokemon = async () => {
     await fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
     .then(data => data.json())
     .then(data => {
-        data.results.forEach(async result => {
-            await getPokemonData(result);
+        const allPokemonSerialized = JSON.stringify(data.results);
+        localStorage.setItem("pokemonList", allPokemonSerialized);
+
+        data.results.forEach(async pokemon => {
+            await getPokemonData(pokemon);
         })
-        setData(data.results);
-    });
+    })
 }
 
 const getPokemonData = async (pokemon) => {
@@ -18,7 +20,8 @@ const getPokemonData = async (pokemon) => {
     await fetch(url)
     .then(data => data.json())
     .then(data => {
-        pokemon.info = data;
+        const pokemonSerialized = JSON.stringify(data);
+        localStorage.setItem(`pokeID${data.id}`, pokemonSerialized);
     })
 };
 
