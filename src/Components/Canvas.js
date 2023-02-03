@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { getPokemon } from '../ViewModel/RequestVM';
+import { getLocalPokemon, getLocalPokemonData, getPokemon } from '../ViewModel/RequestVM';
 import { setupCanvas, draw } from '../ViewModel/CanvasVM';
 
 function Canvas() {
@@ -9,24 +9,18 @@ function Canvas() {
     const canvas = useRef();
 
     useEffect(() => {
-		const localPokemonList = JSON.parse(localStorage.getItem("pokemonList"));
+		const localPokemonList = getLocalPokemon();
 		setupCanvas(canvas, setCanvasReady);
-		
-		if (localPokemonList) {
-			let allPokemonData = [];
-			setPokemonList(localPokemonList);
 
-			localPokemonList.forEach(mon => {
-				const id = mon.url.substring(mon.url, mon.url.length - 1).match(/\d+$/)[0];
-				const pokemon = JSON.parse(localStorage.getItem(`pokeID${id}`));
-				if (pokemon) {
-					allPokemonData.push(pokemon);
-				}
-			});
-
-			setPokeData(allPokemonData);
-		} else {
+		if (localPokemonList == null) {
 			getPokemon();
+		} else {
+			setPokemonList(localPokemonList);
+			const localPokemonData = getLocalPokemonData();
+
+			if (localPokemonData) {
+				setPokeData(localPokemonData);
+			}
 		}
 	}, []);
     
