@@ -2,27 +2,12 @@ import * as Dex from "./PokedexVM";
 import * as Circle from "./CirclesVM";
 const dpr = window.devicePixelRatio || 1;
 
-export const getPokemon = async (setData) => {
-    await fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
-    .then(data => data.json())
-    .then(data => {
-        data.results.forEach(async result => {
-            await getPokemonData(result);
-        })
-        setData(data.results);
-    });
-}
-
-const getPokemonData = async (pokemon) => {
-    let url = pokemon.url;
-    await fetch(url)
-    .then(data => data.json())
-    .then(data => {
-        pokemon.info = data;
-    })
-};
-
-// Sets & scales canvas by DPR to fix blur. Returns canvas context.
+/**
+ * Sets & scales canvas by DPR to fix blur and returns canvas context.
+ * @param {Object} canvas - The canvas grabbed by ref.
+ * @param {Function} setCanvasReady - Sets boolean to determine if ready to draw.
+ * @returns {Object}
+ */
 export function setupCanvas(canvas, setCanvasReady) {
     const rect = canvas.current.getBoundingClientRect();
     const ctx = canvas.current.getContext('2d');

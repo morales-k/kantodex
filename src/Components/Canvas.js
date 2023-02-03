@@ -1,21 +1,34 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { setupCanvas, getPokemon, draw } from '../ViewModel/CanvasVM';
+import { getLocalPokemon, getLocalPokemonData, getPokemon } from '../ViewModel/RequestVM';
+import { setupCanvas, draw } from '../ViewModel/CanvasVM';
 
 function Canvas() {
     const [canvasReady, setCanvasReady] = useState(false);
-    const [pokeData, setPokeData] = useState(null);
+	const [pokemonList, setPokemonList] = useState([]);
+    const [pokeData, setPokeData] = useState([]);
     const canvas = useRef();
 
     useEffect(() => {
-        setupCanvas(canvas, setCanvasReady);
-		getPokemon(setPokeData);
-      }, []);
+		const localPokemonList = getLocalPokemon();
+		setupCanvas(canvas, setCanvasReady);
+
+		if (localPokemonList == null) {
+			getPokemon();
+		} else {
+			setPokemonList(localPokemonList);
+			const localPokemonData = getLocalPokemonData();
+
+			if (localPokemonData) {
+				setPokeData(localPokemonData);
+			}
+		}
+	}, []);
     
-      useEffect(() => {
-        if (canvasReady) {
-          draw(canvas);
-        }
-      }, [canvasReady]);
+	useEffect(() => {
+		if (canvasReady) {
+			draw(canvas);
+		}
+	}, [canvasReady]);
 
     return (
         <canvas ref={canvas} />
