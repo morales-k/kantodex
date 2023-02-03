@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { setupCanvas, getPokemon, draw } from '../ViewModel/CanvasVM';
+import { getPokemon } from '../ViewModel/RequestVM';
+import { setupCanvas, draw } from '../ViewModel/CanvasVM';
 
 function Canvas() {
     const [canvasReady, setCanvasReady] = useState(false);
