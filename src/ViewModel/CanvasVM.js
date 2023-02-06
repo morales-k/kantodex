@@ -47,4 +47,13 @@ export function draw(canvas) {
     Dex.voiceLightCircle(ctx);
     Dex.drawButtonGroup(ctx);
     Dex.thumbPad(ctx);
+
+    // Draw Pokemon image & info.
+    Dex.drawImage(ctx, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")
+
+    Dex.write(ctx, "Bulbasaur", 50, 125, 20);
+    Dex.write(ctx, "001", 240, 125, 20);
+    Dex.write(ctx, "Grass/Poison", 185, 190, 14);
+    Dex.write(ctx, "Height: 7", 185, 215, 14);
+    Dex.write(ctx, "Weight: 69", 185, 240, 14);
 };

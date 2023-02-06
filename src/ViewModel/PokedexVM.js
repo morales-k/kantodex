@@ -130,3 +130,15 @@ export const thumbPad = (ctx) => {
     ctx.strokeStyle = "#131313";
     ctx.stroke();
 };
+
+export const write = (ctx, text, x, y, fontSize) => {
+    ctx.font = fontSize + "px sans-serif";
+    ctx.fillStyle = "#000";
+    ctx.fillText(text, x, y);
+}
+
+export const drawImage = (ctx, imgURL) => {
+    const img = new Image();
+    img.src = imgURL;
+    ctx.drawImage(img, 50, 160);
+};
